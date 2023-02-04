@@ -1,0 +1,14 @@
+body {
+    background-color: lightgray;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: green;
+    align-items: center;
+}
+
