@@ -6,9 +6,9 @@
             for (let i = 1; i <= infodata.info.pages; i++) {
                 $.getJSON(apiURL + "?page=" + i, data => {
                     data.results.forEach((element) => {
-                        const charObj = createCharacterObject(element);
-                        addCharacter(charObj);
-                        showCharacter(charObj);
+                        const character = createCharacterObject(element);
+                        addCharacter(character);
+                        showCharacter(character);
                     });
                 });
             }
@@ -26,14 +26,21 @@
             image: character.image
         };
     }
-    function addCharacter(charObj) {
-        characters.push(charObj);
+    function addCharacter(character) {
+        characters.push(character);
     }
-    function showCharacter(charObj) {
+    function showCharacter(character) {
         let characterList = $(".character-list");
         let characterListItem = $("<li class='character-list-item'></li>");
         let characterButton = $("<button type='button' class='character-button'></button>");
-        characterButton.text(charObj.name);
+        let characterImage = $("<img class='character-image'>");
+        let imageWrapper = $("<div class='image-wrapper'></div>");
+        let textWrapper = $("<div class='text-wrapper'></div>");
+        characterImage.attr("src", character.image);
+        textWrapper.text(character.name);
+        characterButton.addClass(character.status);
+        imageWrapper.append(characterImage);
+        characterButton.append(imageWrapper, textWrapper);
         characterListItem.append(characterButton);
         characterList.append(characterListItem);
     }

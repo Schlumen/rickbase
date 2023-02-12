@@ -1,5 +1,6 @@
 body {
   background-color: lightgray;
+  box-sizing: border-box;
 }
 
 header {
@@ -9,5 +10,68 @@ header {
   justify-content: space-between;
   padding: 10px;
   background-color: green;
+  align-items: center;
+}
+
+ul {
+  margin: 20px;
+}
+
+.character-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.character-list-item {
+  margin: 5px;
+  padding: 0;
+}
+
+.character-button {
+  height: 100px;
+  width: 300px;
+  padding: 0;
+  margin: 0;
+  background-color: #333;
+  color: #fff;
+  border: solid;
+  border-color: #333;
+  border-radius: 10px;
+  border-width: 2px;
+  box-sizing: content-box;
+  overflow: hidden;
+  display: grid;
+  align-items: center;
+  text-align: left;
+  font-size: 18px;
+  grid-template-columns: 1fr 2fr;
+}
+.character-button:hover {
+  cursor: pointer;
+}
+
+.Dead {
+  box-shadow: 0px 0px 4px red;
+}
+
+.Alive {
+  box-shadow: 0px 0px 4px green;
+}
+
+.character-image {
+  -o-object-fit: contain;
+     object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.text-wrapper {
+  padding: 5px;
   align-items: center;
 }/*# sourceMappingURL=styles.css.map */

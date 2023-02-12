@@ -1,4 +1,19 @@
 {
+    interface charObj {
+        name: string,
+        status: string,
+        species: string,
+        type: string,
+        gender: string,
+        origin: string,
+        location: string,
+        image: string
+    }
+
+    interface apiData {
+        [key: string]: any
+    }
+
     let characters = [];
     let apiURL = "https://rickandmortyapi.com/api/character";
 
@@ -7,16 +22,16 @@
             for (let i = 1; i <= infodata.info.pages; i++) {
                 $.getJSON(apiURL + "?page=" + i, data => {
                     data.results.forEach((element: object) => {
-                        const charObj: object = createCharacterObject(element);
-                        addCharacter(charObj);
-                        showCharacter(charObj);
+                        const character: charObj = createCharacterObject(element);
+                        addCharacter(character);
+                        showCharacter(character);
                     });
                 });
             }
         });
     }
 
-    function createCharacterObject(character) {
+    function createCharacterObject(character: apiData) {
         return {
             name: character.name,
             status: character.status,
@@ -29,16 +44,24 @@
         };
     }
 
-    function addCharacter(charObj: object) {
-        characters.push(charObj);
+    function addCharacter(character: charObj) {
+        characters.push(character);
     }
 
-    function showCharacter(charObj) {
+    function showCharacter(character: charObj) {
         let characterList = $(".character-list");
         let characterListItem = $("<li class='character-list-item'></li>");
         let characterButton = $("<button type='button' class='character-button'></button>");
-        characterButton.text(charObj.name);
+        let characterImage = $("<img class='character-image'>");
+        let imageWrapper = $("<div class='image-wrapper'></div>");
+        let textWrapper = $("<div class='text-wrapper'></div>");
+        
+        characterImage.attr("src", character.image);
+        textWrapper.text(character.name);
+        characterButton.addClass(character.status);
 
+        imageWrapper.append(characterImage);
+        characterButton.append(imageWrapper, textWrapper);
         characterListItem.append(characterButton);
         characterList.append(characterListItem);
     }
