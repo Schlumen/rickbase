@@ -59,11 +59,46 @@
         characterImage.attr("src", character.image);
         textWrapper.text(character.name);
         characterButton.addClass(character.status);
+        characterButton.on("click", () => showCharacterModal(character));
 
         imageWrapper.append(characterImage);
         characterButton.append(imageWrapper, textWrapper);
         characterListItem.append(characterButton);
         characterList.append(characterListItem);
+    }
+
+    function showCharacterModal(character: charObj) {
+        let modalContainer = $("#modal-container");
+        let modal = $("<div class='modal'></div>");
+        let modalImageWrapper = $("<div class='modal-image-wrapper'></div>");
+        let modalTextWrapper = $("<div class='modal-text-wrapper'></div>");
+        let modalCharacterImage = $("<img class='modal-character-image'>");
+
+        modalContainer.html("");
+        modalContainer.on("click", (event) => {
+            if ($(event.target).is(modalContainer)) {
+                hideCharacterModal();
+            }
+        });
+
+        modalCharacterImage.attr("src", character.image);
+        modalTextWrapper.html(`<h2>${character.name}</h2>
+            <p>${character.status} - ${character.species}</p>
+            <p>Type: ${character.type}</p>
+            <p><span>Last known location:</span></p>
+            <p>${character.location}</p>
+            <p><span>First seen in:</span><p>
+            <p>${character.origin}</p>`);
+        
+        modalImageWrapper.append(modalCharacterImage);
+        modal.append(modalImageWrapper);
+        modal.append(modalTextWrapper);
+        modalContainer.append(modal);
+        modalContainer.addClass("is-visible");
+    }
+
+    function hideCharacterModal() {
+        $("#modal-container").removeClass("is-visible");
     }
 
     loadApiData();
