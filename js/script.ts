@@ -48,6 +48,12 @@
         characters.push(character);
     }
 
+    function getSearchResults(searchterm: String) {
+        return characters.filter((character: charObj) => {
+            return character.name.toLowerCase().includes(searchterm.toLowerCase());
+        });
+    }
+
     function showCharacter(character: charObj) {
         let characterList = $(".character-list");
         let characterListItem = $("<li class='character-list-item'></li>");
@@ -102,4 +108,11 @@
     }
 
     loadApiData();
+
+    $(".search-button").on("click", () => {
+        $(".character-list").empty();
+        getSearchResults($(".search-input").val().toString()).forEach((character: charObj) => {
+            showCharacter(character);
+        });
+    });
 }

@@ -29,6 +29,11 @@
     function addCharacter(character) {
         characters.push(character);
     }
+    function getSearchResults(searchterm) {
+        return characters.filter((character) => {
+            return character.name.toLowerCase().includes(searchterm.toLowerCase());
+        });
+    }
     function showCharacter(character) {
         let characterList = $(".character-list");
         let characterListItem = $("<li class='character-list-item'></li>");
@@ -75,5 +80,11 @@
         $("#modal-container").removeClass("is-visible");
     }
     loadApiData();
+    $(".search-button").on("click", () => {
+        $(".character-list").empty();
+        getSearchResults($(".search-input").val().toString()).forEach((character) => {
+            showCharacter(character);
+        });
+    });
 }
 //# sourceMappingURL=script.js.map
