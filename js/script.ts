@@ -17,7 +17,7 @@
     let characters = [];
     let apiURL = "https://rickandmortyapi.com/api/character";
 
-    function loadApiData() {
+    function loadApiData(): void {
         $.getJSON(apiURL, infodata => {
             for (let i = 1; i <= infodata.info.pages; i++) {
                 $.getJSON(apiURL + "?page=" + i, data => {
@@ -31,7 +31,7 @@
         });
     }
 
-    function createCharacterObject(character: apiData) {
+    function createCharacterObject(character: apiData): charObj {
         return {
             name: character.name,
             status: character.status,
@@ -44,17 +44,17 @@
         };
     }
 
-    function addCharacter(character: charObj) {
+    function addCharacter(character: charObj): void {
         characters.push(character);
     }
 
-    function getSearchResults(searchterm: String) {
+    function getSearchResults(searchterm: String): charObj[] {
         return characters.filter((character: charObj) => {
             return character.name.toLowerCase().includes(searchterm.toLowerCase());
         });
     }
 
-    function showCharacter(character: charObj) {
+    function showCharacter(character: charObj): void {
         let characterList = $(".character-list");
         let characterListItem = $("<li class='character-list-item'></li>");
         let characterButton = $("<button type='button' class='character-button'></button>");
@@ -73,7 +73,7 @@
         characterList.append(characterListItem);
     }
 
-    function showCharacterModal(character: charObj) {
+    function showCharacterModal(character: charObj): void {
         let modalContainer = $("#modal-container");
         let modal = $("<div class='modal'></div>");
         let modalImageWrapper = $("<div class='modal-image-wrapper'></div>");
@@ -103,16 +103,26 @@
         modalContainer.addClass("is-visible");
     }
 
-    function hideCharacterModal() {
+    function hideCharacterModal(): void {
         $("#modal-container").removeClass("is-visible");
     }
 
     loadApiData();
 
     $(".search-button").on("click", () => {
+        searchAndShowResults();
+    });
+
+    $(".search-input").on("keypress", event => {
+        if (event.which == 13) {
+            searchAndShowResults();
+        }
+    })
+
+    function searchAndShowResults(): void {
         $(".character-list").empty();
         getSearchResults($(".search-input").val().toString()).forEach((character: charObj) => {
             showCharacter(character);
         });
-    });
+    }
 }
