@@ -81,10 +81,18 @@
     }
     loadApiData();
     $(".search-button").on("click", () => {
+        searchAndShowResults();
+    });
+    $(".search-input").on("keypress", event => {
+        if (event.which == 13) {
+            searchAndShowResults();
+        }
+    });
+    function searchAndShowResults() {
         $(".character-list").empty();
         getSearchResults($(".search-input").val().toString()).forEach((character) => {
             showCharacter(character);
         });
-    });
+    }
 }
 //# sourceMappingURL=script.js.map
